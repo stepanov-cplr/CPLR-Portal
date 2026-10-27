@@ -114,6 +114,60 @@ ul.plain li{margin:1px 0}
 .adminonly{background:#FFF8EC;border:1px dashed #E2B866;border-radius:10px;padding:10px 12px}
 .adminonly .lbl{color:#8A5A00}
 .note{font-size:13px;color:var(--muted);font-style:italic}
+.adminnote{background:#FFF8EC;border:1px dashed #E2B866;border-radius:10px;padding:10px 12px;margin:12px 0 0;font-size:14px;color:#6B4A00}
+.adminnote b{color:#8A5A00}
+
+/* Таблиці «люди × пункти» */
+.mx-block{background:#fff;border:1px solid var(--line);border-radius:var(--r);margin-bottom:18px;padding:14px 0 6px}
+.mx-block h2{font-size:17px;margin:0 16px 6px;color:var(--navy)}
+.mx-block h2 small{color:var(--muted);font-weight:400;font-size:13px;margin-left:6px}
+.sec-h{font-size:17px;color:var(--navy);margin:24px 0 12px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;margin:0 16px 8px;font-size:13px;color:var(--muted)}
+.legend .dot{margin-right:6px;vertical-align:-1px}
+.mx-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.mx{border-collapse:separate;border-spacing:0;font-size:14px}
+table.mx th,table.mx td{padding:0;border-bottom:1px solid #EEF0F4;text-align:center;vertical-align:middle}
+table.mx thead th{border-bottom:2px solid var(--line);background:#fff}
+table.mx tr.grp th{font-size:12.5px;color:var(--navy);font-weight:700;border-bottom:1px solid var(--line);padding:4px 2px;border-left:1px solid var(--line)}
+table.mx th.nm{position:sticky;left:0;z-index:2;background:#fff;text-align:left;min-width:190px;max-width:230px;padding:4px 10px 4px 16px;border-right:1px solid var(--line)}
+table.mx thead th.nm{z-index:3;vertical-align:bottom;padding-bottom:8px}
+table.mx th.col{width:34px;min-width:34px;vertical-align:bottom;padding:6px 0}
+table.mx th.col.on,table.mx td.on{background:#EEF4FC}
+.vh{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;max-height:190px;overflow:hidden;text-overflow:ellipsis;border:0;background:none;cursor:pointer;font-size:12.5px;color:var(--ink);padding:2px 0;line-height:1.15;font-weight:600}
+.vh:hover{color:var(--blue)}
+table.mx th.ex,table.mx td.ex{text-align:left;font-size:12.5px;color:var(--muted);min-width:140px;max-width:280px;padding:4px 10px;white-space:normal;vertical-align:middle;font-weight:400}
+table.mx thead th.ex{vertical-align:bottom;color:var(--ink);font-weight:600;padding-bottom:8px}
+table.mx td{height:32px}
+table.mx tbody tr:hover th.nm,table.mx tbody tr:hover td{background:#F5F8FD}
+.plink2{border:0;background:none;padding:0;color:var(--navy-2);font:inherit;font-weight:600;cursor:pointer;text-align:left}
+.plink2:hover{color:var(--blue);text-decoration:underline}
+.tot{float:right;color:var(--muted);font-size:12px;font-weight:400;margin-left:8px;line-height:22px}
+.sortbtn{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--muted);cursor:pointer}
+.sortbtn.on,.sortbtn:hover{color:var(--blue)}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle}
+.dot.yes{background:var(--navy)}
+.dot.try{background:linear-gradient(90deg,var(--try) 50%,#F6E3C2 50%);box-shadow:inset 0 0 0 1.5px var(--try)}
+.dot.no{background:#fff;box-shadow:inset 0 0 0 1.5px #C9CDD6;width:10px;height:10px}
+.nil{display:inline-block;width:4px;height:4px;border-radius:50%;background:#D8DBE2;vertical-align:middle}
+tr.sum th,tr.sum td{font-weight:700;font-size:13px;color:var(--navy);border-bottom:0;background:#F7F8FB;height:30px}
+tr.sum small{font-weight:400;color:var(--try);margin-left:1px}
+.linkbtn{border:0;background:none;padding:0;color:var(--blue);font:inherit;cursor:pointer;text-decoration:underline}
+
+/* Команда */
+.team-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.primary:disabled{opacity:.45;cursor:default}
+.team-status{color:var(--muted);font-size:13.5px}
+.team-status.err,.team-hint.err{color:#8A1C1C}
+table.team{border-collapse:collapse;width:100%;background:#fff;border:1px solid var(--line);border-radius:var(--r);min-width:640px}
+table.team th{text-align:left;font-size:12.5px;color:var(--muted);padding:10px 8px;border-bottom:1px solid var(--line);background:#F7F8FB}
+table.team td{padding:4px 6px;border-bottom:1px solid #F0F1F4}
+table.team input{width:100%;border:1px solid transparent;border-radius:8px;padding:7px 8px;font-size:14px;background:transparent}
+table.team input:hover{border-color:var(--line)}
+table.team input:focus{border-color:var(--blue);outline:none;background:#fff}
+table.team tr.bad td{background:#FDF0F0}
+table.team .del{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15px;padding:6px 10px;border-radius:8px}
+table.team .del:hover{color:#8A1C1C;background:#FDECEC}
 
 /* Покажчик */
 .idx-group{background:#fff;border:1px solid var(--line);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
@@ -132,12 +186,15 @@ ul.plain li{margin:1px 0}
 .loading{padding:60px 16px;text-align:center;color:var(--muted)}
 .banner{background:#FDECEC;color:#8A1C1C;border-radius:10px;padding:12px 14px;margin:16px 0}
 
+@media (max-width:1320px){ nav.tabs .stat{display:none} }
 @media (max-width:640px){
   .grid{grid-template-columns:1fr}
   .chips{flex-wrap:nowrap;overflow-x:auto;margin-left:-16px;margin-right:-16px;padding:0 16px 4px;scrollbar-width:none}
   .chips::-webkit-scrollbar{display:none}
   .chip{white-space:nowrap}
   .idx-row{grid-template-columns:1fr}
+  table.mx th.nm{min-width:140px;max-width:150px;padding-left:10px}
+  .tot{display:none}
   .me .who{display:none}
   .brand span{display:none}
   nav.tabs .stat{display:none}
@@ -175,8 +232,15 @@ ul.plain li{margin:1px 0}
   <nav class="tabs" aria-label="Розділи">
     <div class="wrap" role="tablist">
       <button role="tab" data-tab="people" aria-selected="true">Люди</button>
-      <button role="tab" data-tab="index" aria-selected="false">До кого з яким питанням</button>
+      <button role="tab" data-tab="dirs" aria-selected="false">Напрями</button>
+      <button role="tab" data-tab="comms" aria-selected="false">Комунікації</button>
+      <button role="tab" data-tab="projects" aria-selected="false">Проєкти</button>
+      <button role="tab" data-tab="public" aria-selected="false">Публічність</button>
+      <button role="tab" data-tab="lang" aria-selected="false">Мови</button>
+      <button role="tab" data-tab="contacts" aria-selected="false">Контакти і досвід</button>
+      <button role="tab" data-tab="skills" aria-selected="false">Вміння</button>
       <button role="tab" data-tab="admin" aria-selected="false">Адмінпитання</button>
+      <button role="tab" data-tab="team" aria-selected="false" data-adminonly hidden>Команда</button>
       <span class="spacer"></span>
       <span class="stat" id="stat"></span>
     </div>
@@ -196,23 +260,17 @@ ul.plain li{margin:1px 0}
         <summary>Більше фільтрів</summary>
         <div class="filters" id="selects"></div>
       </details>
+      <div class="adminnote" id="adminNote" hidden></div>
       <div class="resultbar"><span id="count"></span><button class="reset" id="reset" type="button" hidden>Скинути фільтри</button></div>
       <div class="grid" id="cards"></div>
     </section>
 
-    <section id="tab-index" hidden>
-      <p class="lead">Перелік тем і вмінь з анкети — і хто з ними може допомогти. Натисніть ім'я, щоб відкрити картку.</p>
-      <div class="search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="iq" type="search" autocomplete="off" placeholder="Відфільтрувати перелік…">
-      </div>
-      <div id="index"></div>
+    <section id="tab-sec" hidden>
+      <div id="secBody"></div>
     </section>
 
-    <section id="tab-admin" hidden>
-      <p class="lead">До кого звертатися з організаційними, фінансовими й технічними питаннями.</p>
-      <div id="adminIndex"></div>
-      <div class="grid" id="adminCards"></div>
+    <section id="tab-team" hidden>
+      <div id="teamBody"></div>
     </section>
   </main>
 </div>
