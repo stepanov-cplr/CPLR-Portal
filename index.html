@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; base-uri 'none'; form-action 'none'">
+<title>Портал ЦППР</title>
+<link rel="icon" href="logo.png">
+<style>
+:root{
+  --navy:#252868; --navy-2:#15237A; --blue:#1C75BC; --grey:#E6E7E8; --warm:#E0D2CC;
+  --bg:#F4F5F8; --card:#FFFFFF; --ink:#1B1D3A; --muted:#5F6278; --line:#DEE0E6;
+  --mark:#FFE58A; --ok:#1F7A4D; --try:#B7791F; --no:#9AA0AE;
+  --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 "Proxima Nova",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+a{color:var(--blue)}
+[hidden]{display:none !important}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+
+/* Шапка */
+header.top{background:var(--navy);color:#fff}
+header.top .wrap{display:flex;align-items:center;gap:14px;min-height:64px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+header.top img{height:40px;width:auto;display:block}
+.brand{display:flex;flex-direction:column;line-height:1.15;margin-right:auto}
+.brand b{font-size:18px;letter-spacing:.2px}
+.brand span{font-size:12.5px;opacity:.75}
+.me{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.me .who{opacity:.85;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;font-size:13.5px}
+.btn:hover{border-color:var(--blue)}
+header.top .btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+header.top .btn:hover{border-color:#fff}
+
+/* Вхід */
+.gate{min-height:calc(100vh - 64px);display:grid;place-items:center;padding:32px 16px}
+.gate .box{background:var(--card);border-radius:16px;padding:36px 28px;max-width:420px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(37,40,104,.08)}
+.gate img{height:72px;margin-bottom:14px}
+.gate h1{font-size:22px;margin:0 0 6px;color:var(--navy)}
+.gate p{color:var(--muted);margin:0 0 22px}
+.gate .msg{margin-top:18px;font-size:14px;padding:10px 12px;border-radius:10px;background:#FFF4E5;color:#7A4B00}
+.gate .msg.err{background:#FDECEC;color:#8A1C1C}
+#gbtn{display:flex;justify-content:center;min-height:44px}
+
+/* Вкладки */
+nav.tabs{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs button{border:0;background:none;padding:14px 14px 12px;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;font-weight:600}
+nav.tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--blue)}
+nav.tabs .spacer{flex:1}
+nav.tabs .stat{align-self:center;color:var(--muted);font-size:13px;white-space:nowrap;padding-left:12px}
+
+main{padding:20px 0 60px}
+
+/* Пошук і фільтри */
+.search{position:relative;margin-bottom:12px}
+.search input{width:100%;padding:13px 16px 13px 44px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:16px;outline:none}
+.search input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(28,117,188,.15)}
+.search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer;line-height:1.3}
+.chip:hover{border-color:var(--blue)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.toggle[aria-pressed="true"]{background:var(--blue);border-color:var(--blue)}
+.more{margin:6px 0 4px}
+.more summary{cursor:pointer;color:var(--blue);font-size:14px;list-style:none;display:inline-block}
+.more summary::-webkit-details-marker{display:none}
+.more summary::before{content:"＋ "}
+.more[open] summary::before{content:"－ "}
+.filters{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:10px}
+.filters label{display:flex;flex-direction:column;font-size:12.5px;color:var(--muted);gap:4px}
+.filters select{padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14px;color:var(--ink);max-width:100%}
+.resultbar{display:flex;align-items:center;gap:12px;margin:14px 0 12px;color:var(--muted);font-size:14px;flex-wrap:wrap}
+.resultbar .reset{background:none;border:0;color:var(--blue);cursor:pointer;padding:0;font-size:14px}
+
+/* Картки */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card.flash{box-shadow:0 0 0 3px rgba(28,117,188,.35)}
+.head{display:flex;gap:12px;align-items:flex-start}
+.ava{flex:0 0 44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px;color:#fff;background:var(--navy)}
+.ava.comms{background:var(--blue)}
+.ava.admin{background:var(--warm);color:#5A4038}
+.head .nm{font-weight:700;font-size:16.5px;line-height:1.25;color:var(--navy)}
+.head .role{font-size:12.5px;color:var(--muted)}
+.head .mail{font-size:13px;word-break:break-all}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:12px;background:#EEF0F7;color:var(--navy);border-radius:6px;padding:2px 8px;line-height:1.5}
+.tag.dir{background:#E7EEF8;color:var(--navy-2);font-weight:600}
+.tag.assigned{background:#DCEBFA;color:#0D4F8B}
+.tag.soft{background:#F3F4F6;color:var(--muted)}
+.more-contacts{border:0;cursor:pointer;font:inherit;font-size:12px}
+.more-contacts:hover{color:var(--blue)}
+.lbl{font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;margin-bottom:2px}
+.txt{white-space:pre-line;overflow-wrap:anywhere}
+.facts{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--ink)}
+.facts span b{color:var(--muted);font-weight:600}
+mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
+details.more-info{border-top:1px solid var(--line);padding-top:8px}
+details.more-info>summary{cursor:pointer;color:var(--blue);font-size:14px;list-style:none}
+details.more-info>summary::-webkit-details-marker{display:none}
+details.more-info>summary::after{content:" ▾"}
+details.more-info[open]>summary::after{content:" ▴"}
+.sec{margin-top:12px}
+.lvl{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.lvl.ok{background:var(--ok)} .lvl.try{background:var(--try)} .lvl.no{background:var(--no)}
+ul.plain{margin:2px 0 0;padding-left:18px}
+ul.plain li{margin:1px 0}
+.adminonly{background:#FFF8EC;border:1px dashed #E2B866;border-radius:10px;padding:10px 12px}
+.adminonly .lbl{color:#8A5A00}
+.note{font-size:13px;color:var(--muted);font-style:italic}
+
+/* Покажчик */
+.idx-group{background:#fff;border:1px solid var(--line);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
+.idx-group h2{font-size:16px;margin:0;padding:12px 16px;background:#F7F8FB;border-bottom:1px solid var(--line);color:var(--navy);display:flex;justify-content:space-between;gap:10px}
+.idx-group h2 small{color:var(--muted);font-weight:400}
+.idx-row{display:grid;grid-template-columns:minmax(200px,34%) 1fr;gap:6px 16px;padding:9px 16px;border-top:1px solid #F0F1F4}
+.idx-row:first-of-type{border-top:0}
+.idx-row .item{font-weight:600;font-size:14px;overflow-wrap:anywhere}
+.idx-row .item small{color:var(--muted);font-weight:400}
+.people{display:flex;flex-wrap:wrap;gap:4px 6px}
+.plink{border:0;background:#EEF3FB;color:var(--navy-2);border-radius:6px;padding:2px 8px;font-size:13px;cursor:pointer}
+.plink:hover{background:#DCEBFA}
+.plink i{font-style:normal;color:var(--muted);font-size:12px}
+.lead{color:var(--muted);margin:0 0 14px;font-size:14px}
+.empty{padding:40px 16px;text-align:center;color:var(--muted)}
+.loading{padding:60px 16px;text-align:center;color:var(--muted)}
+.banner{background:#FDECEC;color:#8A1C1C;border-radius:10px;padding:12px 14px;margin:16px 0}
+
+@media (max-width:640px){
+  .grid{grid-template-columns:1fr}
+  .chips{flex-wrap:nowrap;overflow-x:auto;margin-left:-16px;margin-right:-16px;padding:0 16px 4px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{white-space:nowrap}
+  .idx-row{grid-template-columns:1fr}
+  .me .who{display:none}
+  .brand span{display:none}
+  nav.tabs .stat{display:none}
+}
+@media print{
+  header.top,nav.tabs,.search,.chips,.more,.resultbar{display:none}
+  .card{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <img src="logo.png" alt="ЦППР">
+    <div class="brand"><b>Портал ЦППР</b><span>Карта експертиз · лише для команди</span></div>
+    <div class="me" id="me" hidden>
+      <span class="who" id="meName"></span>
+      <button class="btn" id="refresh" type="button" title="Завантажити свіжі відповіді">Оновити</button>
+      <button class="btn" id="logout" type="button">Вийти</button>
+    </div>
+  </div>
+</header>
+
+<section class="gate" id="gate">
+  <div class="box">
+    <img src="logo.png" alt="">
+    <h1>Карта експертиз ЦППР</h1>
+    <p>Внутрішня сторінка. Увійдіть акаунтом Google, з яким ви працюєте в ЦППР.</p>
+    <div id="gbtn"></div>
+    <div class="msg" id="gateMsg" hidden></div>
+  </div>
+</section>
+
+<div id="app" hidden>
+  <nav class="tabs" aria-label="Розділи">
+    <div class="wrap" role="tablist">
+      <button role="tab" data-tab="people" aria-selected="true">Люди</button>
+      <button role="tab" data-tab="index" aria-selected="false">До кого з яким питанням</button>
+      <button role="tab" data-tab="admin" aria-selected="false">Адмінпитання</button>
+      <span class="spacer"></span>
+      <span class="stat" id="stat"></span>
+    </div>
+  </nav>
+  <main class="wrap">
+    <div id="loading" class="loading">Завантажую карту…</div>
+    <div id="error" class="banner" hidden></div>
+
+    <section id="tab-people" hidden>
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" autocomplete="off" placeholder="Тема, закон, орган, донор, ім'я… наприклад: адміністративна процедура">
+      </div>
+      <div class="chips" id="dirChips"></div>
+      <div class="chips" id="toggleChips"></div>
+      <details class="more" id="moreFilters">
+        <summary>Більше фільтрів</summary>
+        <div class="filters" id="selects"></div>
+      </details>
+      <div class="resultbar"><span id="count"></span><button class="reset" id="reset" type="button" hidden>Скинути фільтри</button></div>
+      <div class="grid" id="cards"></div>
+    </section>
+
+    <section id="tab-index" hidden>
+      <p class="lead">Перелік тем і вмінь з анкети — і хто з ними може допомогти. Натисніть ім'я, щоб відкрити картку.</p>
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="iq" type="search" autocomplete="off" placeholder="Відфільтрувати перелік…">
+      </div>
+      <div id="index"></div>
+    </section>
+
+    <section id="tab-admin" hidden>
+      <p class="lead">До кого звертатися з організаційними, фінансовими й технічними питаннями.</p>
+      <div id="adminIndex"></div>
+      <div class="grid" id="adminCards"></div>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+<script src="https://accounts.google.com/gsi/client" async></script>
+</body>
+</html>
