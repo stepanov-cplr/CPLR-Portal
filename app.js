@@ -368,7 +368,6 @@ const SHORT = {
   "Технічні питання по сайту": "Сайт", "Техніка, акаунти, доступи": "Техніка, акаунти"
 };
 const short = v => SHORT[v] || DIR_SHORT[v] || v;
-const OTHER = "@other";
 
 // Таблиця за полем-списком: стовпці — офіційні варіанти (за кількістю), решта відповідей — стовпець «Інше»
 function fieldTable(id, title, field, more) {
@@ -378,16 +377,16 @@ function fieldTable(id, title, field, more) {
   const offSet = new Set(official);
   const cols = Object.keys(cnt).filter(v => offSet.has(v)).sort((a, b) => cnt[b] - cnt[a] || a.localeCompare(b, "uk"))
     .map(v => ({ k: v, label: short(v), full: v }));
-  const hasOther = S.people.some(p => arr(p[field]).some(v => !offSet.has(v)));
-  if (hasOther) cols.push({ k: OTHER, label: "Інше", full: "Інша відповідь — текст у підказці й на картці" });
+  // Відповіді своїми словами («Інше») — окремим текстовим стовпцем поруч, щоб їх було видно одразу
+  const otherOf = p => arr(p[field]).filter(v => !offSet.has(v));
+  const hasOther = S.people.some(p => otherOf(p).length);
+  more = more || {};
+  const extras = (hasOther ? [{ title: "Своїми словами", get: p => otherOf(p).join("; ") }] : []).concat(more.extras || []);
   return Object.assign({
     id, title, cols,
     rows: p => arr(p[field]).length > 0,
-    val: (p, c) => {
-      if (c.k === OTHER) { const o = arr(p[field]).filter(v => !offSet.has(v)); return o.length ? { v: "yes", tip: o.join("; ") } : ""; }
-      return arr(p[field]).includes(c.k) ? "yes" : "";
-    }
-  }, more || {});
+    val: (p, c) => arr(p[field]).includes(c.k) ? "yes" : ""
+  }, more, { extras });
 }
 
 const PUB_LVL = { ok: "yes", try: "try", no: "no" };
