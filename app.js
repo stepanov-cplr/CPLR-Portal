@@ -66,10 +66,16 @@ function renderGoogleButton() {
 }
 
 function showGate(msg, isErr) {
-  $("app").hidden = true; $("me").hidden = true; $("gate").hidden = false;
+  $("app").hidden = true; $("me").hidden = true; $("gate").hidden = false; $("gbtn").hidden = false;
   const m = $("gateMsg");
   m.hidden = !msg; m.textContent = msg || ""; m.className = "msg" + (isErr ? " err" : "");
   renderGoogleButton();
+}
+// Поки сервер не підтвердив доступ — лише екран входу з «Перевіряю доступ…», без розділів сторінки
+function showChecking() {
+  $("app").hidden = true; $("me").hidden = true; $("gate").hidden = false; $("gbtn").hidden = true;
+  const m = $("gateMsg");
+  m.hidden = false; m.textContent = "Перевіряю доступ…"; m.className = "msg info";
 }
 
 function forget(msg, isErr) {
@@ -98,13 +104,21 @@ async function loadMap() {
     showGate("Сторінку ще не під'єднано до сервера: у файлі app.js не вписано адресу розгортання.", true);
     return;
   }
-  $("gate").hidden = true; $("app").hidden = false; $("loading").hidden = false; $("error").hidden = true;
-  ["people", "sec", "team"].forEach(t => $("tab-" + t).hidden = true);
+  // Розділи показуємо лише тим, кого сервер уже пустив у цій вкладці (кнопка «Оновити»)
+  const inside = !!S.data;
+  if (inside) {
+    $("loading").hidden = false; $("error").hidden = true;
+    ["people", "sec", "team"].forEach(t => $("tab-" + t).hidden = true);
+  } else showChecking();
   let r;
   try { r = await api("getMap"); }
-  catch (e) { $("loading").hidden = true; showError("Не вдалося зв'язатися з сервером. Перевірте інтернет і натисніть «Оновити»."); $("me").hidden = false; return; }
-  $("loading").hidden = true;
+  catch (e) {
+    if (inside) { $("loading").hidden = true; showError("Не вдалося зв'язатися з сервером. Перевірте інтернет і натисніть «Оновити»."); $("me").hidden = false; }
+    else showGate("Не вдалося зв'язатися з сервером. Перевірте інтернет і спробуйте ще раз.", true);
+    return;
+  }
   if (r && r.ok) {
+    $("gate").hidden = true; $("gbtn").hidden = false; $("app").hidden = false; $("loading").hidden = true; $("error").hidden = true;
     S.me = r.me; S.data = r.map; prepare(); renderAll();
     return;
   }
@@ -113,8 +127,8 @@ async function loadMap() {
     else forget("Сесія завершилася. Увійдіть ще раз.");
     return;
   }
-  showError("Сервер повернув помилку. Спробуйте «Оновити» за хвилину; якщо не минає — напишіть адміністратору.");
-  $("me").hidden = false;
+  if (inside) { $("loading").hidden = true; showError("Сервер повернув помилку. Спробуйте «Оновити» за хвилину; якщо не минає — напишіть адміністратору."); $("me").hidden = false; }
+  else showGate("Сервер повернув помилку. Спробуйте увійти ще раз за хвилину; якщо не минає — напишіть адміністратору.", true);
 }
 function showError(t) { const e = $("error"); e.textContent = t; e.hidden = false; }
 
